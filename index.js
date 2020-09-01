@@ -3,6 +3,8 @@ const db = require("./data/db");
 const postRoutes = require("./postRoutes")
 const server = express();
 
+server.use(express.json())
+server.use(cors())
 server.use("/api/posts", postRoutes)
 
 
