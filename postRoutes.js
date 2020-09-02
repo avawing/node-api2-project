@@ -76,8 +76,9 @@ router.post("/", (req, res) => {
 router.post("/:id/comments", (req, res) => {
   const comment = req.body;
   const id = Number(req.params.id);
-  db.findById(id)
+  comment.post_id = id;
 
+  db.insertComment(comment)
   .then((post)=>{
     if (!post) {
         res.status(404).json({ message: "Not found" }).end();
@@ -86,8 +87,8 @@ router.post("/:id/comments", (req, res) => {
         res.status(400).json({ message: "Please fill out all fields" }).end();
       }
       if (comment) {
-        comment.post_id = id;
-        db.insertComment(comment);
+        
+        
         res.status(201).json(post).end();
       } else {
         res.status(500).json({ message: "Nope" }).end();
